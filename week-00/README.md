@@ -51,3 +51,24 @@ The repository will contain the work completed throughout the 12-week AWS Cloud 
 ## Notes
 
 PropertyLite is the application that will be used throughout the program. The focus is on deploying, scaling, securing, containerizing, automating, monitoring, and operating the application rather than building its business logic.
+
+## Week 0 Completion
+
+All Week 0 environment setup and PropertyLite validation tasks were completed successfully.
+
+### PropertyLite Validation
+
+- [x] Created the PropertyLite Flask application.
+- [x] Installed Python dependencies in a virtual environment.
+- [x] Started the application locally on port 8080.
+- [x] Tested `/health` successfully.
+- [x] Tested `/properties` successfully.
+- [x] Tested `/properties/R100234` successfully.
+- [x] Added `.gitignore` to exclude the Python virtual environment and cache files.
+- [x] Committed the PropertyLite application to Git.
+- [x] Pushed the completed Week 0 work to GitHub.
+
+### Week 0 Status
+
+**Completed — September 18, 2026**
+
