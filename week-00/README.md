@@ -14,7 +14,7 @@ This week focused on setting up the local development environment and GitHub rep
 - Installed the official AWS Toolkit extension for VS Code.
 - Installed the HashiCorp Terraform extension for VS Code.
 - Installed and verified Terraform CLI.
-- Created the `aws-cloud-engineer-journey` GitHub repository.
+- Created the `IDX-Exchange-AWS-Cloud` GitHub repository.
 - Initialized the local Git repository.
 - Created the initial `README.md`.
 - Configured Git username and email.
@@ -34,7 +34,7 @@ This week focused on setting up the local development environment and GitHub rep
 
 ## GitHub Repository
 
-Repository: `aws-cloud-engineer-journey`
+Repository: `IDX-Exchange-AWS-Cloud`
 
 The repository will contain the work completed throughout the 12-week AWS Cloud Engineer program, organized by week.
 
