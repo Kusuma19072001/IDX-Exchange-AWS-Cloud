@@ -17,6 +17,13 @@ The policy is restricted to:
 
 This means the permissions apply only to objects inside the specified training bucket.
 
+### Why These Permissions Are Scoped This Way
+
+- `s3:PutObject` is required so the test user can upload objects to the training bucket.
+- `s3:GetObject` is required so the test user can download objects from the training bucket.
+- The resource is restricted to `arn:aws:s3:::my-training-bucket-kusuma/*` so these permissions apply only to objects inside this specific training bucket.
+- `s3:ListAllMyBuckets` was intentionally not included because the test user does not need permission to list or discover other S3 buckets.
+
 ### What Is Not Allowed
 
 The policy does not include `s3:ListAllMyBuckets`.
