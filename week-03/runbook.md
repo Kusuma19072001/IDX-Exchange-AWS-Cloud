@@ -47,7 +47,8 @@ I copied it into my WSL SSH directory and restricted its permissions:
 mkdir -p ~/.ssh
 cp /mnt/c/Users/kusum/Downloads/training-key.pem ~/.ssh/
 chmod 400 ~/.ssh/training-key.pem
-4. Connect to the EC2 Instance
+```
+## 4. Connect to the EC2 Instance
 
 I connected to the instance using SSH:
 
@@ -55,7 +56,7 @@ ssh -i ~/.ssh/training-key.pem ec2-user@<EC2-PUBLIC-IP>
 
 The SSH connection was successful and opened an Amazon Linux shell.
 
-5. Deploy PropertyLite
+## 5. Deploy PropertyLite
 
 The PropertyLite application was deployed under:
 
@@ -68,7 +69,7 @@ rets_property_sample.csv
 
 The Flask application listens on port 8080.
 
-6. Start the PropertyLite API
+## 6. Start the PropertyLite API
 
 The EC2 user-data bootstrap script installed Flask and started the PropertyLite API.
 
@@ -79,7 +80,7 @@ nohup python3 app.py > /var/log/property-api.log 2>&1 &
 
 I verified that the Flask process was running.
 
-7. Test the Health Endpoint
+## 7. Test the Health Endpoint
 
 From my local WSL terminal, I tested:
 
@@ -91,7 +92,7 @@ Expected response:
 
 The health endpoint returned successfully.
 
-8. Test the Property Endpoint
+## 8. Test the Property Endpoint
 
 I tested a specific property:
 
@@ -105,7 +106,7 @@ week-03-propertylite-curl.png
 
 and uploaded to the week-03/ directory in the GitHub repository.
 
-9. Create an EBS Snapshot
+## 9. Create an EBS Snapshot
 
 The EC2 instance used an 8 GiB gp3 root EBS volume.
 
@@ -117,7 +118,7 @@ snap-0faba8386562ee71f
 
 The snapshot was created successfully.
 
-10. Verify EC2 Status Checks
+## 10. Verify EC2 Status Checks
 
 I verified that the EC2 instance passed:
 
@@ -128,11 +129,11 @@ EBS status check
 All checks passed successfully.
 
 Debug Lab 3.3 — SSH Timeout Troubleshooting
-11. Symptom
+## 11. Symptom
 
 An SSH connection can time out if the security group's SSH rule allows access only from an old public IP address.
 
-12. Diagnose
+## 12. Diagnose
 
 Check the following in order:
 
@@ -141,7 +142,7 @@ Confirm the instance has the correct public IPv4 address.
 Check the security group's inbound SSH rule.
 Confirm the SSH source is the user's current public IP.
 Check the VPC route and network ACLs if necessary.
-13. Root Cause
+## 13. Root Cause
 
 The security group used a My IP SSH rule.
 
@@ -149,14 +150,14 @@ This creates a /32 rule for the public IP address that was detected when the rul
 
 If the user's public IP changes, SSH can time out because the new IP is no longer allowed.
 
-14. Fix
+## 14. Fix
 
 Update the security group's SSH inbound rule to the user's current public IP using the My IP option.
 
 SSH should remain restricted to the user's IP rather than opening port 22 to everyone.
 
 Cleanup
-15. Terminate the EC2 Instance
+## 15. Terminate the EC2 Instance
 
 After completing the lab, the EC2 instance should be terminated to avoid unnecessary AWS charges.
 
@@ -164,19 +165,19 @@ Instance:
 
 property-api-01
 
-16. Verify the EBS Volume
+## 16. Verify the EBS Volume
 
 After the instance is terminated, verify that the root EBS volume is also deleted because it was configured with Delete on Termination.
 
 The EBS snapshot should not be deleted because it is part of the Week 3 lab deliverable.
 
-Week 3 Deliverables
+## Week 3 Deliverables
 week-03/runbook.md
 week-03/week-03-propertylite-curl.png
 EBS snapshot successfully created
 EC2 and EBS status checks verified
 Cleanup completed: EC2 instance terminated and EBS volume verified as deleted
-Week 3 Summary
+## Week 3 Summary
 Deployed a Flask-based PropertyLite API on Amazon EC2.
 Configured a security group for SSH and application access.
 Connected to EC2 using an SSH key from WSL.
