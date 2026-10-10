@@ -37,6 +37,16 @@ The program focuses on deploying, securing, scaling, containerizing, automating,
 - Documented the policy in `week-02/policies/`.
 - Cleaned up temporary Week 2 AWS resources after completing the lab.
 
+### Week 03 — EC2 & PropertyLite Deployment
+- Launched an Amazon Linux 2023 EC2 instance (`t3.micro`) in `us-east-1`.
+- Configured the `property-api-sg` security group for SSH and API access.
+- Connected to EC2 securely using SSH from Ubuntu (WSL).
+- Deployed the PropertyLite Flask API and sample property CSV.
+- Tested the `/health`, `/properties`, and property-detail endpoints.
+- Verified the API returned the expected responses.
+- Created and verified an EBS snapshot.
+- Documented the deployment steps and saved screenshot evidence in `week-03/`.
+
 ## 12-Week Journey
 
 | Week | Focus |
@@ -74,6 +84,9 @@ IDX-Exchange-AWS-Cloud/
     └── policies/
         ├── README.md
         └── S3UploaderOnly-kusuma.json
+└── week-03/
+    ├── runbook.md
+    └── week-03-propertylite-curl.png
 
 ## Main Application
 
@@ -87,11 +100,11 @@ The goal is not to build new business logic every week. Instead, the application
 
 ## Current Status
 
-**Completed:** Week 0, Week 1, Week 2
+**Completed:** Week 0, Week 1, Week 2, Week 3
 
-**Current focus:** AWS Cloud Engineering — Week 2 completed
+**Current focus:** Week 3 - EC2 & PropertyLite Deployment completed
 
-**Next:** Week 3 — EC2 & Application Deployment
+**Next:** Week 4 - S3, RDS & DynamoDB
 
 ---
 
