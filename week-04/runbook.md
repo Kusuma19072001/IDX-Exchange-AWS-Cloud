@@ -1,386 +1,194 @@
-\# Week 4 — Storage and Databases Runbook
+# Week 04 — Storage & Databases
+## AWS Cloud Engineer Internship | PropertyLite
 
+> **Objective:** Practice object storage with Amazon S3, relational database connectivity with Amazon RDS, and NoSQL item retrieval with Amazon DynamoDB.  
+> **AWS Region:** `us-east-1` (US East — N. Virginia)
 
+---
 
-\## 1. Overview
+## 1. Lab Overview
 
-
-
-\*\*Objective:\*\* Learn how to store files in Amazon S3, work with relational databases using Amazon RDS, and retrieve individual records using Amazon DynamoDB.
-
-
-
-\*\*AWS Region:\*\* `us-east-1` (US East — N. Virginia)
-
-
-
-\*\*Project:\*\* PropertyLite
-
-
-
-\## 2. AWS Resources Used
-
-
-
-| Resource | Name | Purpose |
-
+| Lab | Service | What I practiced |
 |---|---|---|
+| 4.1 | Amazon S3 | Create a bucket, upload an object, configure a lifecycle rule, and clean up |
+| 4.2 | Amazon RDS | Connect to managed MySQL from an EC2 client and inspect a database |
+| 4.3 | Amazon DynamoDB | Create a table, configure IAM access, and retrieve an item |
 
-| Amazon RDS | `training-db` | Practice relational database connectivity |
+## 2. Resources Used
 
-| Amazon EC2 | `week4-rds-client` | Connect to RDS and run AWS CLI commands |
+| Resource | Name / Identifier | Purpose |
+|---|---|---|
+| RDS MySQL | `training-db` | Relational database practice |
+| EC2 client | `week4-rds-client` | Run MySQL client and AWS CLI commands |
+| DynamoDB table | `Properties` | Store and retrieve a sample property item |
+| S3 bucket | `my-training-bucket-kusuma` | Object upload and lifecycle practice |
+| IAM role | `week4-dynamodb-ec2-role` | Grant EC2 limited DynamoDB access |
 
-| Amazon DynamoDB | `Properties` | Store and retrieve property records |
+These resources were used during the lab. Cleanup was initiated as recorded in Section 7; verify final deletion status in the AWS console.
 
-| Amazon S3 | `my-training-bucket-kusuma` | Upload and manage objects |
+---
 
-| IAM Role | `week4-dynamodb-ec2-role` | Allow the EC2 instance to access DynamoDB |
+## 3. Lab 4.1 — Amazon S3
 
+### Goal
+Practice bucket creation, object upload, lifecycle configuration, and cleanup.
 
+### Steps completed
+1. Created `my-training-bucket-kusuma` in `us-east-1`.
+2. Uploaded an object named `runbook.md`.
+3. Verified the object with the AWS CLI.
+4. Created a lifecycle rule named `archive-after-30-days`.
+5. Configured eligible objects to transition to S3 Glacier Flexible Retrieval after 30 days.
+6. Deleted the test object and bucket during cleanup.
 
-These resources were used during the lab. They were subsequently scheduled for deletion or cleaned up as described below.
+### Verification command
 
-
-
-\## 3. Lab 4.1 — Amazon S3
-
-
-
-\### Objective
-
-Create an S3 bucket, upload an object, and configure a lifecycle rule.
-
-
-
-\### Steps performed
-
-1\. Created the S3 bucket `my-training-bucket-kusuma` in `us-east-1`.
-
-2\. Uploaded a `runbook.md` object.
-
-3\. Verified the bucket and object using the AWS CLI.
-
-4\. Created a lifecycle rule named `archive-after-30-days`.
-
-5\. Configured the rule to transition eligible objects to S3 Glacier Flexible Retrieval after 30 days.
-
-
-
-\### Verification
-
-
-
-```powershell
-
-aws s3 ls s3://my-training-bucket-kusuma --region us-east-1
-
-```
-
-
-
-The object listing confirmed that the uploaded object was present.
-
-
-
-\### Cleanup
-
-Deleted the object and then deleted the bucket. The S3 console showed that the bucket had been deleted.
-
-
-
-\*\*Learning:\*\* S3 stores objects in buckets. Lifecycle rules automate transitions between storage classes and can help manage storage costs. Glacier Flexible Retrieval has minimum storage-duration considerations, so lifecycle rules should be planned carefully.
-
-
-
-\## 4. Lab 4.2 — Amazon RDS
-
-
-
-\### Objective
-
-Practice connecting to a managed relational database from an EC2 instance.
-
-
-
-\### Configuration
-
-\- DB instance identifier: `training-db`
-
-\- Engine: MySQL 8.4
-
-\- Database: `training\_data`
-
-\- Region: `us-east-1`
-
-\- Client instance: `week4-rds-client`
-
-
-
-\### Network access
-
-The RDS security group was configured to allow MySQL traffic on TCP port `3306` from the EC2 client's security group.
-
-
-
-\*\*Security note:\*\* Database access should be restricted to trusted sources. Avoid opening port 3306 to the entire internet or including public IP addresses, passwords, or database credentials in GitHub documentation.
-
-
-
-\### Steps performed
-
-1\. Created the RDS MySQL instance.
-
-2\. Connected from the EC2 instance using a MySQL client.
-
-3\. Created the `training\_data` database.
-
-4\. Inspected database tables and SQL schema.
-
-5\. Attempted to work with the supplied property SQL dump.
-
-
-
-\### Example connection command
-
-
-
-Use your actual endpoint and credentials in the terminal. Never put a password in a GitHub runbook.
-
-
+Run from a terminal configured for the correct AWS account:
 
 ```bash
-
-mysql -h YOUR\_RDS\_ENDPOINT -P 3306 -u YOUR\_DB\_USER -p
-
+aws s3 ls s3://my-training-bucket-kusuma --region us-east-1
 ```
 
+**Expected result:** The command lists objects currently in the bucket. After deleting the bucket, the command will no longer succeed because the bucket no longer exists.
 
+### Key takeaway
+Amazon S3 is object storage. Lifecycle rules can automate storage-class transitions, but Glacier storage classes have minimum storage-duration and retrieval-cost considerations.
 
-After connecting, the following SQL commands can be used:
+---
 
+## 4. Lab 4.2 — Amazon RDS (MySQL)
 
+### Goal
+Connect to a managed MySQL database from an EC2 instance and practice basic SQL.
+
+### Configuration recorded
+- **DB identifier:** `training-db`
+- **Engine:** MySQL 8.4
+- **Database created:** `training_data`
+- **Region:** `us-east-1`
+- **Client:** `week4-rds-client`
+
+### Network access
+The RDS security group was configured to allow TCP port `3306` from the EC2 client's security group.
+
+> **Security reminder:** Keep database access limited to trusted sources. Do not publish passwords, access keys, private connection details, or unnecessary public IP information in a repository.
+
+### Connect to MySQL
+
+Replace the placeholder with the endpoint shown in the RDS console. Enter the password only at the interactive prompt.
+
+```bash
+mysql -h YOUR_RDS_ENDPOINT -P 3306 -u YOUR_DB_USER -p
+```
+
+After connecting, run:
 
 ```sql
-
-CREATE DATABASE IF NOT EXISTS training\_data;
-
-USE training\_data;
-
+CREATE DATABASE IF NOT EXISTS training_data;
+USE training_data;
 SHOW TABLES;
-
 ```
 
+### Import status
+The supplied property SQL dump required schema adjustments, and the import did not complete reliably during the recorded lab. **Do not report the full dataset as successfully imported unless you verify the final table count, row count, and sample records.**
 
+The source dump contained sensitive property and personal information. Do not commit the raw dump or unredacted records to GitHub.
 
-\### Import status and data handling
+### Key takeaway
+Amazon RDS manages the database infrastructure. Security groups control network connectivity, while database users and grants control database-level access.
 
-The SQL dump required schema adjustments, and the import did not complete reliably during the recorded lab work. Do not describe the full dataset as successfully imported unless you independently verify the final row count and table contents.
+---
 
+## 5. Lab 4.3 — Amazon DynamoDB
 
+### Goal
+Create a NoSQL table, grant the EC2 instance limited access, and retrieve an item.
 
-The source property dump contained sensitive personal and property-related information. Raw dumps, personal information, credentials, and unredacted datasets must not be committed to GitHub.
+### Configuration
+| Setting | Value |
+|---|---|
+| Table | `Properties` |
+| Partition key | `L_ListingID` |
+| Key type | String |
+| Capacity mode | On-demand |
+| Region | `us-east-1` |
 
+### Steps completed
+1. Created the `Properties` table.
+2. Added a sample item for testing.
+3. Attached an IAM role to the EC2 instance with limited DynamoDB permissions.
+4. Checked the AWS identity and tested item retrieval.
 
-
-\*\*Learning:\*\* Amazon RDS manages the database infrastructure, while security groups control network access to the database.
-
-
-
-\## 5. Lab 4.3 — Amazon DynamoDB
-
-
-
-\### Objective
-
-Create a NoSQL table and retrieve a record using the AWS CLI.
-
-
-
-\### Configuration
-
-\- Table: `Properties`
-
-\- Partition key: `L\_ListingID`
-
-\- Key type: String
-
-\- Capacity mode: On-demand
-
-\- Region: `us-east-1`
-
-
-
-\### Steps performed
-
-1\. Created the `Properties` table.
-
-2\. Added a sample property item for testing.
-
-3\. Attached an IAM role to the EC2 instance with limited DynamoDB permissions.
-
-4\. Verified the AWS identity using STS.
-
-5\. Retrieved the sample item using the AWS CLI.
-
-
-
-\### Example retrieval command
-
-
+### Retrieve an item
 
 ```bash
-
-aws dynamodb get-item \\
-
-&#x20; --table-name Properties \\
-
-&#x20; --key '{"L\_ListingID":{"S":"R100001"}}' \\
-
-&#x20; --region us-east-1
-
+aws dynamodb get-item \
+  --table-name Properties \
+  --key '{"L_ListingID":{"S":"R100001"}}' \
+  --region us-east-1
 ```
 
+**Expected result:** If the table exists and the item is present, the command returns the item attributes as JSON. If the item is missing, the response may contain an empty `Item` result.
 
+### IAM principle
+The EC2 role was configured for table-scoped actions such as `GetItem`, `PutItem`, and `DescribeTable`.
 
-The command returned the sample item when it was available in the table.
+### Key takeaway
+DynamoDB is a managed NoSQL database. The partition key identifies items, and IAM policies determine which AWS API actions the workload can perform.
 
+---
 
+## 6. Troubleshooting & Lessons Learned
 
-\### IAM permissions
+| Issue | Resolution / lesson |
+|---|---|
+| Network testing utility was unavailable | Not every tool is preinstalled on Amazon Linux; check availability and use an appropriate alternative. |
+| DynamoDB access was denied initially | Attach an EC2 IAM role with only the required permissions; avoid storing long-term access keys on the instance. |
+| SQL import was interrupted | Verify table names, row counts, and sample records before calling an import successful. |
+| S3 cleanup required the correct order | Remove objects and review lifecycle configuration before deleting the bucket. |
 
-The EC2 role was configured for limited access to the `Properties` table, including actions such as `GetItem`, `PutItem`, and `DescribeTable`.
+---
 
+## 7. Cleanup Checklist
 
+Cleanup actions were reported as performed or initiated. Confirm the final state in the AWS console before considering cleanup complete.
 
-\*\*Learning:\*\* DynamoDB is a managed NoSQL database. Its partition key identifies records, and IAM policies control which actions an identity can perform.
+- [x] **S3:** Deleted the test object and bucket; deletion was shown in the console.
+- [ ] **DynamoDB:** Confirm `Properties` is fully deleted, not still in `Deleting` state.
+- [ ] **RDS:** Confirm `training-db` is fully deleted.
+- [ ] **EC2:** Confirm `week4-rds-client` is terminated.
+- [ ] **IAM:** Review `week4-dynamodb-ec2-role` and remove it only if no longer needed.
+- [ ] **Other charges:** Check for leftover EBS volumes, snapshots, RDS snapshots, Elastic IP addresses, and NAT gateways.
 
+Do **not** delete the default VPC, subnets, or route tables as part of this lab cleanup.
 
+---
 
-\## 6. Issues Encountered and Lessons Learned
+## 8. Evidence & Deliverables
 
+### Evidence screenshots
+- DynamoDB table creation and sample item
+- Successful DynamoDB `get-item` command
+- EC2 instance and IAM role configuration
+- S3 object upload and lifecycle rule
+- S3 bucket deletion
+- RDS connection and security-group configuration, if available
 
+Before committing screenshots, confirm that they do not expose passwords, access keys, sensitive records, or unnecessary personal information.
 
-\### Issue 1 — Network utility unavailable
+### Deliverables
+- `week-04/decision-guide.md`
+- `week-04/runbook.md`
+- Supporting screenshots, if required by the internship handbook
 
-A network testing command was not available on the EC2 instance.
+---
 
+## 9. Summary
 
+Week 4 provided hands-on practice with three AWS services:
 
-\*\*Lesson:\*\* Not every utility is preinstalled on Amazon Linux. Check available tools and use an appropriate alternative.
+- **Amazon S3:** Object storage, lifecycle management, and cleanup
+- **Amazon RDS:** Managed MySQL connectivity and database fundamentals
+- **Amazon DynamoDB:** NoSQL table creation, IAM permissions, and item retrieval
 
-
-
-\### Issue 2 — DynamoDB access denied
-
-The EC2 instance initially lacked the required permissions.
-
-
-
-\*\*Resolution:\*\* Attached an IAM role with the necessary DynamoDB permissions and tested the AWS identity.
-
-
-
-\*\*Lesson:\*\* Prefer IAM roles for AWS workloads instead of storing long-term access keys on an instance.
-
-
-
-\### Issue 3 — SQL import did not complete reliably
-
-The database connection was interrupted during the import attempt.
-
-
-
-\*\*Lesson:\*\* Verify database imports with table listings, row counts, and sample queries. Do not assume an import succeeded simply because a table exists.
-
-
-
-\### Issue 4 — S3 cleanup
-
-The object and bucket needed to be removed in the correct order.
-
-
-
-\*\*Lesson:\*\* Clean up objects and lifecycle configurations before deleting buckets, and account for storage-class minimum-duration charges.
-
-
-
-\## 7. Cleanup
-
-
-
-The following cleanup actions were performed or initiated during the lab:
-
-
-
-\- \*\*S3:\*\* Deleted the test object and bucket; the console showed successful deletion.
-
-\- \*\*DynamoDB:\*\* Submitted deletion of the `Properties` table; verify that it reached the deleted state.
-
-\- \*\*RDS:\*\* Initiated deletion of `training-db`; verify that the instance is fully deleted.
-
-\- \*\*EC2:\*\* The temporary `week4-rds-client` instance was reported terminated; verify its final state.
-
-\- \*\*IAM:\*\* Review the temporary `week4-dynamodb-ec2-role` and its policies. Remove them only if they are no longer needed.
-
-\- \*\*Other billable resources:\*\* Check for retained EBS volumes, snapshots, RDS snapshots, Elastic IP addresses, and NAT gateways.
-
-
-
-Do not delete the default VPC, subnets, or route tables as part of this cleanup.
-
-
-
-\## 8. Evidence and Deliverables
-
-
-
-Evidence collected during the lab included screenshots of:
-
-
-
-\- DynamoDB table creation and the sample item
-
-\- Successful DynamoDB `get-item` command
-
-\- EC2 instance and IAM role configuration
-
-\- S3 object upload and lifecycle rule
-
-\- S3 bucket deletion
-
-
-
-Include RDS connection and security-group screenshots if available. Screenshots should not expose passwords, access keys, sensitive records, or unnecessary personal information.
-
-
-
-\### Deliverables
-
-\- `week-04/decision-guide.md`
-
-\- `week-04/runbook.md`
-
-\- Supporting screenshots, if required by the internship handbook
-
-
-
-\## 9. Summary
-
-
-
-Week 4 provided hands-on practice with three AWS storage and database services:
-
-
-
-\- \*\*Amazon S3:\*\* Object storage, lifecycle management, and cleanup
-
-\- \*\*Amazon RDS:\*\* Managed MySQL connectivity and database fundamentals
-
-\- \*\*Amazon DynamoDB:\*\* NoSQL table creation, IAM access, and item retrieval
-
-
-
-The lab reinforced the importance of least-privilege access, data protection, verification, and cost-aware resource cleanup.
-
-
-
+The main lessons were to use least-privilege permissions, protect sensitive data, verify results rather than assume success, and remove temporary resources to control costs.
