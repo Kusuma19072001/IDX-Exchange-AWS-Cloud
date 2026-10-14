@@ -45,12 +45,25 @@ The program focuses on deploying, securing, scaling, containerizing, automating,
 - Tested the `/health`, `/properties`, and property-detail endpoints.
 - Verified the API returned the expected responses.
 - Created and verified an EBS snapshot.
-- Documented the deployment steps and saved screenshot evidence in `week-03/`.
+- Documented the deployment steps in `week-03/runbook.md`.
+- Saved relevant screenshot evidence in `week-03/`.
+
+### Week 04 — Storage & Databases
+- Practiced Amazon S3 bucket creation, object upload, and lifecycle configuration.
+- Configured a lifecycle rule to transition eligible objects to S3 Glacier Flexible Retrieval.
+- Connected to an Amazon RDS MySQL database from an EC2 client.
+- Created the `training_data` database and practiced SQL commands.
+- Explored SQL dump preparation and database import troubleshooting.
+- Created a DynamoDB table named `Properties` with `L_ListingID` as the partition key.
+- Configured EC2 IAM role permissions for DynamoDB access.
+- Tested retrieving a DynamoDB item using the AWS CLI.
+- Practiced cleaning up temporary AWS resources to help control costs.
+- Documented the labs in `week-04/runbook.md` and `week-04/decision-guide.md`.
 
 ## 12-Week Journey
 
 | Week | Focus |
-|------|-------|
+|---|---|
 | 00 | Environment & PropertyLite Setup |
 | 01 | Cloud Fundamentals & Account Setup |
 | 02 | IAM & Security Foundations |
@@ -69,44 +82,47 @@ The program focuses on deploying, securing, scaling, containerizing, automating,
 
 ```text
 IDX-Exchange-AWS-Cloud/
-│
 ├── README.md
-│
 ├── week-00/
-│   └── propertylite/
-│
+│   └── PropertyLite/
 ├── week-01/
 │   ├── 01-root-mfa.png
 │   ├── 02-zero-spend-budget.png
 │   └── README.md
-│
-└── week-02/
-    └── policies/
-        ├── README.md
-        └── S3UploaderOnly-kusuma.json
-└── week-03/
-    ├── runbook.md
-    └── week-03-propertylite-curl.png
+├── week-02/
+│   └── policies/
+│       ├── README.md
+│       └── S3UploaderOnly-kusuma.json
+├── week-03/
+│   ├── runbook.md
+│   └── week-03-propertylite-curl.png
+└── week-04/
+    ├── decision-guide.md
+    └── runbook.md
+```
+
+*The structure above highlights key deliverables; additional files and screenshots may also be present in each week's folder.*
 
 ## Main Application
 
 ### PropertyLite
 
-PropertyLite is the application that will be carried through the internship.
+PropertyLite is the application carried through the internship.
 
-The goal is not to build new business logic every week. Instead, the application is used to practice real cloud engineering tasks:
+The goal is to use the application to practice real cloud engineering tasks rather than build new business logic every week:
 
 **Deploy → Secure → Scale → Automate → Monitor → Operate**
 
 ## Current Status
 
-**Completed:** Week 0, Week 1, Week 2, Week 3
+**Completed:** Weeks 00–04 (documented lab work)
 
-**Current focus:** Week 3 - EC2 & PropertyLite Deployment completed
+**Current focus:** Week 04 — Storage & Databases completed; final AWS resource cleanup should be verified in the AWS console.
 
-**Next:** Week 4 - S3, RDS & DynamoDB
+**Next:** Week 05 — VPC & Networking
 
 ---
 
-This repository will be updated at the end of each week with the work completed, documentation, configuration, and relevant evidence.
+This repository will be updated at the end of each week with completed work, documentation, configuration examples, and relevant evidence.
 
+**Security note:** Credentials, access keys, passwords, unredacted property datasets, and other sensitive information must never be committed to this repository.
