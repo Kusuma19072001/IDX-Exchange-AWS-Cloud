@@ -59,6 +59,18 @@ The program focuses on deploying, securing, scaling, containerizing, automating,
 - Tested retrieving a DynamoDB item using the AWS CLI.
 - Practiced cleaning up temporary AWS resources to help control costs.
 - Documented the labs in `week-04/runbook.md` and `week-04/decision-guide.md`.
+- Performed additional cleanup checks for temporary AWS resources.
+
+### Week 05 — VPC & Networking
+- Explored VPCs, public and private subnets, route tables, and Internet Gateways.
+- Reviewed the network layout for the training environment.
+- Practiced understanding the traffic path from a laptop through a bastion host to a private EC2 instance.
+- Documented SSH access flow and the role of security groups.
+- Created a VPC traffic-path diagram in `week-05/vpc-diagram.png`.
+- Explained the architecture and traffic path in `week-05/README.md`.
+- Reviewed AWS resource cleanup and cost considerations, including NAT Gateway and VPC endpoint removal.
+
+**Architecture note:** The Week 5 diagram represents the intended bastion-to-private-instance SSH access pattern. Verify subnet associations, route tables, instance addresses, and security group rules in the AWS console before treating the diagram as a verified production architecture.
 
 ## 12-Week Journey
 
@@ -96,9 +108,12 @@ IDX-Exchange-AWS-Cloud/
 ├── week-03/
 │   ├── runbook.md
 │   └── week-03-propertylite-curl.png
-└── week-04/
-    ├── decision-guide.md
-    └── runbook.md
+├── week-04/
+│   ├── decision-guide.md
+│   └── runbook.md
+└── week-05/
+    ├── README.md
+    └── vpc-diagram.png
 ```
 
 *The structure above highlights key deliverables; additional files and screenshots may also be present in each week's folder.*
@@ -115,14 +130,20 @@ The goal is to use the application to practice real cloud engineering tasks rath
 
 ## Current Status
 
-**Completed:** Weeks 00–04 (documented lab work)
+**Completed:** Weeks 00–04 documented lab work.
 
-**Current focus:** Week 04 — Storage & Databases completed; final AWS resource cleanup should be verified in the AWS console.
+**Current focus:** Week 05 — VPC & Networking.
 
-**Next:** Week 05 — VPC & Networking
+**Next:** Week 06 — Load Balancing & Auto Scaling.
+
+## Security & Cost Management
+
+- Never commit credentials, access keys, passwords, private keys, or unredacted property datasets to GitHub.
+- Apply least-privilege IAM permissions and restrict inbound network access.
+- Remove temporary lab resources when they are no longer needed.
+- Verify that EC2 instances, EBS volumes, snapshots, NAT Gateways, Elastic IP addresses, database instances, and other billable resources are in the intended state.
+- Review AWS Budgets, credits, and billing estimates regularly.
 
 ---
 
 This repository will be updated at the end of each week with completed work, documentation, configuration examples, and relevant evidence.
-
-**Security note:** Credentials, access keys, passwords, unredacted property datasets, and other sensitive information must never be committed to this repository.
