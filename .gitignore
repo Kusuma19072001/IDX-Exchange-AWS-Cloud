@@ -1,0 +1,42 @@
+# macOS
+.DS_Store
+.AppleDouble
+._*
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Python (PropertyLite app)
+__pycache__/
+*.pyc
+.venv/
+venv/
+*.egg-info/
+
+# Secrets and keys — never commit these
+*.pem
+*.key
+.env
+.env.*
+credentials
+credentials.*
+*credentials*.csv
+*.tfvars
+
+# AWS CLI / Terraform / SAM scratch
+.aws/
+.terraform/
+*.tfstate
+*.tfstate.backup
+.aws-sam/
+
+# Logs and temp
+*.log
+tmp/
