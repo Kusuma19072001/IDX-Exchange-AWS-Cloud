@@ -12,15 +12,15 @@ the cleaned sample records; it does not load data from the raw SQL export.
 
 ```mermaid
 flowchart TD
-    A[Client: Browser / Postman / cURL] -->|GET /properties/{id}| B[Amazon API Gateway]
-    B -->|Invokes function with pathParameters.id| C[AWS Lambda: get-property]
-    C -->|dynamodb:GetItem| D[(Amazon DynamoDB: Properties)]
-    D -->|Property item| C
-    C -->|HTTP 200 + JSON body| B
-    B -->|JSON response| A
-    C -.->|Execution logs| E[Amazon CloudWatch Logs]
-    C -->|Assumes execution role| F[IAM role: get-property]
-    F -->|GetItem on Properties table only| D
+    A["Client: Browser / Postman / cURL"] -->|"GET property by ID"| B["Amazon API Gateway"]
+    B -->|"Invokes function with pathParameters.id"| C["AWS Lambda: get-property"]
+    C -->|"dynamodb:GetItem"| D[("Amazon DynamoDB: Properties")]
+    D -->|"Property item"| C
+    C -->|"HTTP 200 + JSON body"| B
+    B -->|"JSON response"| A
+    C -.->|"Execution logs"| E["Amazon CloudWatch Logs"]
+    C -->|"Assumes execution role"| F["IAM role: get-property"]
+    F -->|"GetItem on Properties table only"| D
 ```
 
 ### AWS configuration
