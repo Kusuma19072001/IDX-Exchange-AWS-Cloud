@@ -127,6 +127,21 @@ The program focuses on deploying, securing, scaling, containerizing, automating,
 
 **Lab 7.3 note:** No actual HTTP 500 failure was reproduced during the investigation. The existing serverless read path was functioning successfully, so no code or configuration fixes were necessary.
 
+
+### Week 08 — Infrastructure as Code (Terraform)
+
+- Recreated the Week 5 VPC architecture using Terraform and the AWS VPC module.
+- Provisioned a VPC with two public subnets, two private subnets, an Internet Gateway, and a NAT Gateway.
+- Used `terraform init`, `validate`, `plan`, and `apply` to initialize, validate, review, and deploy infrastructure.
+- Successfully provisioned 19 AWS resources in `us-east-1`.
+- Verified the deployed VPC through the AWS Management Console.
+- Inspected Terraform state using `terraform state list`.
+- Investigated state differences using `terraform plan -refresh-only`.
+- Successfully destroyed all 19 Terraform-managed resources using `terraform destroy`.
+- Documented Terraform state management, drift detection, cleanup, and security best practices.
+
+**Deliverables:** [week-08/](week-08/)
+
 ## 12-Week Journey
 
 | Week | Focus |
@@ -181,6 +196,11 @@ IDX-Exchange-AWS-Cloud/
     │   └── README.md
     └── debugging/
         └── README.md
+└── week-08/
+    ├── main.tf
+    ├── .gitignore
+    ├── .terraform.lock.hcl
+    └── README.md
 ```
 
 *The repository structure highlights key deliverables. Additional scripts, screenshots, configuration files, and supporting documentation may also be present in individual weekly folders.*
@@ -199,13 +219,15 @@ The application has been used to explore traditional EC2 deployment, load balanc
 
 ## Current Status
 
-**Completed:** Weeks 00–07 documented lab work.
 
-**Current focus:** Preparing for Week 08 — Terraform & Infrastructure as Code.
+**Completed:** Weeks 00–08 documented lab work.
+
+**Current focus:** Week 08 completed — Terraform & Infrastructure as Code. Successfully provisioned, validated, inspected, and destroyed AWS networking infrastructure using Terraform.
 
 **Upcoming:** Docker, ECS Fargate, CI/CD automation, monitoring, cost optimization, and the PropertyLite capstone.
 
 ## Security & Cost Management
+
 
 - Never commit credentials, access keys, passwords, private keys, or unredacted property datasets to GitHub.
 - Apply least-privilege IAM permissions and restrict inbound network access.
