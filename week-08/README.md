@@ -248,3 +248,21 @@ The existing Week 5 VPC was not included in the Week 8 Terraform destroy operati
 Successfully provisioned 19 AWS networking resources using Terraform, inspected Terraform state and refreshed infrastructure information, and destroyed all 19 Terraform-managed resources.
 
 This lab demonstrated the benefits of Infrastructure as Code for repeatable provisioning, infrastructure visibility, change management, and controlled cleanup.
+
+## Screenshots — Lab Evidence
+
+The following screenshots document the Week 08 Terraform workflow, from configuration and initialization through deployment, state inspection, and cleanup.
+
+1. **Terraform VPC Configuration** — [View Screenshot](screenshots/01_Terraform_VPC_Configuration.png)
+2. **Terraform Initialization** — [View Screenshot](screenshots/02_Terraform_Init_Success.png)
+3. **Terraform Validation and Plan** — [View Screenshot](screenshots/03_Terraform_Validate_and_Plan.png)
+4. **Terraform Plan: 19 Resources** — [View Screenshot](screenshots/04_Terraform_Plan_19_Resources.png)
+5. **Terraform Apply Execution** — [View Screenshot](screenshots/05_Terraform_Apply_Execution.png)
+6. **Terraform Apply Success** — [View Screenshot](screenshots/06_Terraform_Apply_Success.png)
+7. **AWS VPC Verification** — [View Screenshot](screenshots/07_AWS_VPC_Verification.png)
+8. **Terraform State List** — [View Screenshot](screenshots/08_Terraform_State_List.png)
+9. **Terraform Refresh-Only Drift Check** — [View Screenshot](screenshots/09_Terraform_Drift_Check.png)
+10. **Terraform Destroy Success** — [View Screenshot](screenshots/10_Terraform_Destroy_Success.png)
+11. **NAT Gateway Deletion Verification** — [View Screenshot](screenshots/11_NAT_Gateway_Deleted.png)
+
+**Final result:** Successfully provisioned 19 Terraform-managed AWS resources, inspected state and refreshed infrastructure information, and destroyed all 19 resources after completing the lab.
