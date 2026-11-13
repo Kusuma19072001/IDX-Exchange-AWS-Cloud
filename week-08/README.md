@@ -105,6 +105,63 @@ Verified the newly created VPC through the AWS Management Console.
 
 Terraform successfully provisioned the VPC, public and private subnets, Internet Gateway, NAT Gateway, Elastic IP, route tables, associations, and default networking resources.
 
+
+### Terraform Workflow
+
+The following workflow illustrates how Terraform was used to provision, validate, inspect, and clean up AWS infrastructure during Week 8.
+
+```text
+       Terraform Configuration
+               main.tf
+                  |
+                  v
+           terraform init
+      Initialize providers and modules
+                  |
+                  v
+         terraform validate
+       Validate the configuration
+                  |
+                  v
+           terraform plan
+       Preview infrastructure changes
+                  |
+                  v
+           terraform apply
+          Create AWS resources
+                  |
+                  v
+        AWS Infrastructure
+       VPC + Public/Private Subnets
+       Internet Gateway + NAT Gateway
+                  |
+                  v
+         terraform state list
+        Inspect managed resources
+                  |
+                  v
+      terraform plan -refresh-only
+       Inspect state differences
+                  |
+                  v
+          terraform destroy
+         Remove AWS resources
+                  |
+                  v
+          Cleanup Complete
+         19 Resources Destroyed
+```
+
+### Workflow Summary
+
+1. **Configuration:** Defined the desired VPC infrastructure in `main.tf`.
+2. **Initialization:** Downloaded the required AWS provider and Terraform VPC module.
+3. **Validation:** Verified that the Terraform configuration was valid.
+4. **Planning:** Reviewed the 19 AWS resources Terraform intended to create.
+5. **Deployment:** Successfully provisioned all 19 resources.
+6. **State Inspection:** Used Terraform state to identify managed resources and inspect recorded infrastructure differences.
+7. **Cleanup:** Destroyed all 19 Terraform-managed resources to avoid unnecessary AWS charges.
+
 ## Debug Lab 8.2 — Terraform State Drift
 
 ### Objective
